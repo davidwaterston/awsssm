@@ -1,0 +1,27 @@
+{
+    "schemaVersion": "2.2",
+    "description": "Restart the Lucee service.",
+    "mainSteps": [
+        {
+            "name": "RestartLuceeService",
+            "action": "aws:runShellScript",
+            "precondition": {
+                "StringEquals": [
+                    "platformType",
+                    "Linux"
+                ]
+            },
+            "inputs": {
+                "runCommand": [
+                    "#!/bin/bash",
+                    "function finish {",
+                    "sleep 30s",
+                    "sudo service lucee_ctl start",
+                    "}",
+                    "trap finish EXIT",
+                    "sudo service lucee_ctl stop"
+                ]
+            }
+        }
+    ]
+}
