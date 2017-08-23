@@ -1,0 +1,31 @@
+{
+    "schemaVersion":"2.2",
+    "description":"Show the current Git branch and any added/changed files. This is achieved by using a git branch, followed by a git status.",
+    "parameters": {
+        "repoDirectory": {
+            "description": "(Optional) The path of the Git repo to be checked. The default is '/www'.",
+            "type": "String",
+            "default": "/www"
+        }
+    },
+    "mainSteps": [
+        {
+            "name":"ShowGitStatus",
+            "action":"aws:runShellScript",
+            "precondition":{
+               "StringEquals":["platformType", "Linux"]
+            },
+            "inputs": {
+                "runCommand":[
+                    "#!/bin/bash",
+                    "cd {{ repoDirectory }}",
+                    "echo '\n'",
+                    "git branch",
+                    "echo '\n'",
+                    "git status",
+                    "echo '\n'"
+                ]
+            }
+        }
+    ]
+}
